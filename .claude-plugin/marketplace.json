@@ -1,0 +1,36 @@
+{
+  "name": "claude-irv",
+  "owner": {
+    "name": "Irvine",
+    "contact": "github.com/irvineDA"
+  },
+  "description": "Irvine's personal Claude Code plugin with development commands, specialized AI agents, and reusable skills",
+  "plugins": [
+    {
+      "name": "claude-irv",
+      "source": "./",
+      "description": "Personal Claude Code configuration with productivity commands, 16 specialized AI agents, and reusable skills for modern web and Java development",
+      "version": "1.1.0",
+      "author": {
+        "name": "Irvine",
+        "email": "[redacted]"
+      },
+      "tags": [
+        "productivity",
+        "nextjs",
+        "supabase",
+        "typescript",
+        "react",
+        "api",
+        "development",
+        "mcp",
+        "spring-boot",
+        "java",
+        "devops",
+        "docker",
+        "kubernetes",
+        "code-review"
+      ]
+    }
+  ]
+}
