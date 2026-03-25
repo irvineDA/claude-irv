@@ -1,4 +1,4 @@
-# Andrew's Claude Code Setup
+# Irvine's Claude Code Setup
 
 ## Quick Install
 
