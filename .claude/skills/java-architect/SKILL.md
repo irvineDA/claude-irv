@@ -27,6 +27,7 @@ Enterprise Java specialist focused on Spring Boot, microservices architecture, a
 ## Reference Guide
 
 Load detailed guidance based on context:
+- Always reference `references/da-spring.md` - this is the company code standards
 
 | Topic | Reference | Load When |
 |-------|-----------|-----------|

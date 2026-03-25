@@ -1,91 +1,46 @@
 {
-  "name": "edmunds-claude-code",
-  "version": "1.0.0",
-  "description": "Edmund's personal Claude Code setup with 14 productivity commands and 11 specialized AI agents for modern web development",
-  "author": "Edmund",
+  "name": "claude-irv",
+  "version": "1.1.0",
+  "description": "Andrew Irvine's personal Claude Code plugin with development commands, specialized AI agents, and reusable skills",
+  "author": "Andrew Irvine",
   "license": "MIT",
   "commands": [
     {
       "name": "new-task",
       "path": ".claude/commands/new-task.md",
-      "description": "Analyze code for performance issues and suggest optimizations"
-    },
-    {
-      "name": "code-explain",
-      "path": ".claude/commands/misc/code-explain.md",
-      "description": "Generate detailed code explanations"
-    },
-    {
-      "name": "code-optimize",
-      "path": ".claude/commands/misc/code-optimize.md",
-      "description": "Optimize code for performance"
-    },
-    {
-      "name": "code-cleanup",
-      "path": ".claude/commands/misc/code-cleanup.md",
-      "description": "Clean up and refactor code"
+      "description": "Analyze code for performance issues and create actionable implementation plans"
     },
     {
       "name": "feature-plan",
       "path": ".claude/commands/misc/feature-plan.md",
-      "description": "Plan new feature implementation"
+      "description": "Plan feature implementation with technical specifications and phased rollout strategies"
     },
     {
       "name": "lint",
       "path": ".claude/commands/misc/lint.md",
-      "description": "Run linting and fix issues"
+      "description": "Run linting and fix code quality issues"
     },
     {
       "name": "docs-generate",
       "path": ".claude/commands/misc/docs-generate.md",
-      "description": "Generate documentation"
-    },
-    {
-      "name": "api-new",
-      "path": ".claude/commands/api/api-new.md",
-      "description": "Create new API endpoint"
-    },
-    {
-      "name": "api-test",
-      "path": ".claude/commands/api/api-test.md",
-      "description": "Test API endpoints"
-    },
-    {
-      "name": "api-protect",
-      "path": ".claude/commands/api/api-protect.md",
-      "description": "Add API protection and validation"
+      "description": "Generate documentation automatically"
     },
     {
       "name": "component-new",
       "path": ".claude/commands/ui/component-new.md",
-      "description": "Create new React component"
-    },
-    {
-      "name": "page-new",
-      "path": ".claude/commands/ui/page-new.md",
-      "description": "Create new Next.js page"
-    },
-    {
-      "name": "types-gen",
-      "path": ".claude/commands/supabase/types-gen.md",
-      "description": "Generate Supabase TypeScript types"
-    },
-    {
-      "name": "edge-function-new",
-      "path": ".claude/commands/supabase/edge-function-new.md",
-      "description": "Create new Supabase Edge Function"
+      "description": "Create new React component with TypeScript and best practices"
     }
   ],
   "agents": [
     {
-      "name": "tech-stack-researcher",
-      "path": ".claude/agents/tech-stack-researcher.md",
-      "description": "Research and recommend technology choices for feature development"
-    },
-    {
       "name": "backend-architect",
       "path": ".claude/agents/backend-architect.md",
       "description": "Design reliable backend systems with focus on data integrity, security, and fault tolerance"
+    },
+    {
+      "name": "code-reviewer",
+      "path": ".claude/agents/code-reviewer.md",
+      "description": "Conduct comprehensive code reviews focusing on code quality, security vulnerabilities, and best practices"
     },
     {
       "name": "deep-research-agent",
@@ -93,9 +48,24 @@
       "description": "Specialist for comprehensive research with adaptive strategies and intelligent exploration"
     },
     {
+      "name": "devops-engineer",
+      "path": ".claude/agents/devops-engineer.md",
+      "description": "Build and optimize infrastructure automation, CI/CD pipelines, and deployment workflows"
+    },
+    {
+      "name": "docker-expert",
+      "path": ".claude/agents/docker-expert.md",
+      "description": "Build, optimize, and secure Docker container images and orchestration for production environments"
+    },
+    {
       "name": "frontend-architect",
       "path": ".claude/agents/frontend-architect.md",
       "description": "Create accessible, performant user interfaces with focus on user experience and modern frameworks"
+    },
+    {
+      "name": "kubernetes-specialist",
+      "path": ".claude/agents/kubernetes-specialist.md",
+      "description": "Design, deploy, configure, and troubleshoot Kubernetes clusters and workloads in production"
     },
     {
       "name": "learning-guide",
@@ -123,9 +93,19 @@
       "description": "Identify security vulnerabilities and ensure compliance with security standards and best practices"
     },
     {
+      "name": "spring-boot-engineer",
+      "path": ".claude/agents/spring-boot-engineer.md",
+      "description": "Build enterprise Spring Boot 3+ applications with microservices architecture and cloud-native deployment"
+    },
+    {
       "name": "system-architect",
       "path": ".claude/agents/system-architect.md",
       "description": "Design scalable system architecture with focus on maintainability and long-term technical decisions"
+    },
+    {
+      "name": "tech-stack-researcher",
+      "path": ".claude/agents/tech-stack-researcher.md",
+      "description": "Research and recommend technology choices for feature development"
     },
     {
       "name": "technical-writer",
@@ -158,6 +138,12 @@
     "react",
     "api",
     "development",
-    "mcp"
+    "mcp",
+    "spring-boot",
+    "java",
+    "devops",
+    "docker",
+    "kubernetes",
+    "code-review"
   ]
 }
