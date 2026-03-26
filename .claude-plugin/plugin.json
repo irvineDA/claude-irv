@@ -2,117 +2,18 @@
   "name": "claude-irv",
   "version": "1.1.0",
   "description": "Irvine's personal Claude Code plugin with development commands, specialized AI agents, and reusable skills",
-  "author": "Irvine",
+  "author": {
+    "name": "Andrew Irvine"
+  },
   "license": "MIT",
   "commands": [
-    {
-      "name": "new-task",
-      "path": ".claude/commands/new-task.md",
-      "description": "Analyze code for performance issues and create actionable implementation plans"
-    },
-    {
-      "name": "feature-plan",
-      "path": ".claude/commands/misc/feature-plan.md",
-      "description": "Plan feature implementation with technical specifications and phased rollout strategies"
-    },
-    {
-      "name": "lint",
-      "path": ".claude/commands/misc/lint.md",
-      "description": "Run linting and fix code quality issues"
-    },
-    {
-      "name": "docs-generate",
-      "path": ".claude/commands/misc/docs-generate.md",
-      "description": "Generate documentation automatically"
-    },
-    {
-      "name": "component-new",
-      "path": ".claude/commands/ui/component-new.md",
-      "description": "Create new React component with TypeScript and best practices"
-    }
+    ".claude/commands/new-task.md",
+    ".claude/commands/misc/feature-plan.md",
+    ".claude/commands/misc/lint.md",
+    ".claude/commands/misc/docs-generate.md",
+    ".claude/commands/ui/component-new.md"
   ],
-  "agents": [
-    {
-      "name": "backend-architect",
-      "path": ".claude/agents/backend-architect.md",
-      "description": "Design reliable backend systems with focus on data integrity, security, and fault tolerance"
-    },
-    {
-      "name": "code-reviewer",
-      "path": ".claude/agents/code-reviewer.md",
-      "description": "Conduct comprehensive code reviews focusing on code quality, security vulnerabilities, and best practices"
-    },
-    {
-      "name": "deep-research-agent",
-      "path": ".claude/agents/deep-research-agent.md",
-      "description": "Specialist for comprehensive research with adaptive strategies and intelligent exploration"
-    },
-    {
-      "name": "devops-engineer",
-      "path": ".claude/agents/devops-engineer.md",
-      "description": "Build and optimize infrastructure automation, CI/CD pipelines, and deployment workflows"
-    },
-    {
-      "name": "docker-expert",
-      "path": ".claude/agents/docker-expert.md",
-      "description": "Build, optimize, and secure Docker container images and orchestration for production environments"
-    },
-    {
-      "name": "frontend-architect",
-      "path": ".claude/agents/frontend-architect.md",
-      "description": "Create accessible, performant user interfaces with focus on user experience and modern frameworks"
-    },
-    {
-      "name": "kubernetes-specialist",
-      "path": ".claude/agents/kubernetes-specialist.md",
-      "description": "Design, deploy, configure, and troubleshoot Kubernetes clusters and workloads in production"
-    },
-    {
-      "name": "learning-guide",
-      "path": ".claude/agents/learning-guide.md",
-      "description": "Teach programming concepts and explain code with focus on understanding through progressive learning"
-    },
-    {
-      "name": "performance-engineer",
-      "path": ".claude/agents/performance-engineer.md",
-      "description": "Optimize system performance through measurement-driven analysis and bottleneck elimination"
-    },
-    {
-      "name": "refactoring-expert",
-      "path": ".claude/agents/refactoring-expert.md",
-      "description": "Improve code quality and reduce technical debt through systematic refactoring and clean code principles"
-    },
-    {
-      "name": "requirements-analyst",
-      "path": ".claude/agents/requirements-analyst.md",
-      "description": "Transform ambiguous project ideas into concrete specifications through systematic requirements discovery"
-    },
-    {
-      "name": "security-engineer",
-      "path": ".claude/agents/security-engineer.md",
-      "description": "Identify security vulnerabilities and ensure compliance with security standards and best practices"
-    },
-    {
-      "name": "spring-boot-engineer",
-      "path": ".claude/agents/spring-boot-engineer.md",
-      "description": "Build enterprise Spring Boot 3+ applications with microservices architecture and cloud-native deployment"
-    },
-    {
-      "name": "system-architect",
-      "path": ".claude/agents/system-architect.md",
-      "description": "Design scalable system architecture with focus on maintainability and long-term technical decisions"
-    },
-    {
-      "name": "tech-stack-researcher",
-      "path": ".claude/agents/tech-stack-researcher.md",
-      "description": "Research and recommend technology choices for feature development"
-    },
-    {
-      "name": "technical-writer",
-      "path": ".claude/agents/technical-writer.md",
-      "description": "Create clear, comprehensive technical documentation tailored to specific audiences with focus on usability"
-    }
-  ],
+  "agents": ".claude/agents/",
   "mcpServers": {
     "context7": {
       "command": "npx",

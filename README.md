@@ -1,4 +1,4 @@
-# Irvine's Claude Code Setup
+# Irvines's Claude Code Setup
 
 ## Quick Install
 
