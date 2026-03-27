@@ -5,9 +5,10 @@ model: claude-sonnet-4-5
 
 Generate a succinct, relevant and informative Obsidian Note.
 
-## Create a reference note
-Create a new Obsidian note in my Obsidian Vault, using a the prompt provided. Analyze all available context (relevant) and produce a succinct, information reference note for future reference.
-Properly categorise this note in the correct folder / sub-folder. 
-Include any hyperlinks to maintain linked structure of notes.
-Include a link to the note on the home note.
-In all things, follow strictly the convention set out in other notes in the vault and use my personal tone for writing notes (use British english please) and include images where relevant.
+## Instructions
+
+1. Read `/Users/andrewirvine/Documents/Obsidian Vault/VAULT_STYLE.md` first — it contains all vault structure, formatting, and writing style conventions. Do not ask the user about style or location; derive everything from that file.
+2. Read `/Users/andrewirvine/Documents/Obsidian Vault/Home.md` to see existing structure and avoid duplicate links.
+3. Using the prompt provided, create a note that is concise, practical, and written in the user's personal tone (British English, casual, first-person).
+4. Save the note to the correct folder per the vault structure defined in VAULT_STYLE.md.
+5. If the note is a permanent reference, add a `[[Note Name]]` link to the appropriate section of `Home.md`.
