@@ -196,6 +196,155 @@ Seven tests. Every branch taken, boundary pinned, clock deterministic. No test c
 - **Code that catches everything** (`except Exception: log; pass`): You can only test that it *doesn't* raise, which is nearly worthless. Note in output: *"Error path is swallowed at line N — consider narrowing the catch or re-raising so failures are observable."*
 - **Randomness or concurrency inside the unit:** Seed the RNG or inject it. If concurrency is load-bearing to the behavior, this isn't a unit test — hand off to → `metamorphic-test-generator` or an integration harness.
 
+## React Components (React Testing Library)
+
+When the target is a React component, apply these rules on top of the standard workflow.
+
+### Philosophy
+
+Test what the user sees and does — not implementation details. A test that breaks when you rename a CSS class or move state into a custom hook is a *fragile* test. A test that breaks when the rendered output changes or an interaction stops working is a *useful* test.
+
+### Framework detection additions
+
+Add these rows to Step 1's detection table when in a React project:
+
+| Check | Look for |
+|---|---|
+| Test runner | `jest` (CRA, Vite+jest), `vitest` (`vitest.config.ts`) |
+| RTL | `@testing-library/react`, `@testing-library/user-event` |
+| Extended matchers | `@testing-library/jest-dom` (`toBeInTheDocument`, `toHaveValue`, etc.) |
+| API mocking | `msw` (`handlers.ts`, `server.ts` in test setup) |
+| Render wrapper | Project-level custom `render` in `test-utils.tsx` — always use it instead of RTL's default |
+
+### Query priority
+
+Use queries in this order. Higher = more resilient and closer to what the user experiences:
+
+| Priority | Query | Use when |
+|---|---|---|
+| 1 | `getByRole` | Buttons, inputs, headings, links — almost always |
+| 2 | `getByLabelText` | Form fields with a `<label>` |
+| 3 | `getByPlaceholderText` | Inputs with no label (less ideal) |
+| 4 | `getByText` | Non-interactive text content |
+| 5 | `getByDisplayValue` | Current value of select/input |
+| 6 | `getByAltText` | Images |
+| 7 | `getByTitle` | SVG or title attribute |
+| 8 | `getByTestId` | **Last resort only** — requires a `data-testid` prop, couples test to markup |
+
+**Never** query by class name, component name, or CSS selector. That's testing implementation.
+
+### Interactions
+
+Prefer `userEvent` over `fireEvent`. `userEvent` simulates real browser events (focus, keyboard, pointer events) and catches more bugs:
+
+```tsx
+// ✅ Preferred
+const user = userEvent.setup()
+await user.click(screen.getByRole('button', { name: /submit/i }))
+await user.type(screen.getByLabelText(/email/i), 'test@example.com')
+await user.selectOptions(screen.getByRole('combobox'), 'option-value')
+await user.keyboard('{Enter}')
+await user.tab()
+
+// ❌ Avoid — skips real browser event chain
+fireEvent.click(button)
+```
+
+### Async assertions
+
+| Need | Use |
+|---|---|
+| Element appears after async op | `await screen.findByRole(...)` (combines `waitFor` + `getBy`) |
+| Element disappears | `await waitForElementToBeRemoved(() => screen.getByText('Loading...'))` |
+| Generic wait for condition | `await waitFor(() => expect(...).toBeInTheDocument())` |
+| Avoid | `waitFor` wrapping a `findBy*` — redundant |
+
+Always `await` async assertions. Un-awaited `waitFor` calls silently pass even when the condition never resolves.
+
+### Testing custom hooks
+
+Use `renderHook` for hooks that don't need a full component:
+
+```tsx
+import { renderHook, act } from '@testing-library/react'
+
+it('increments counter', () => {
+  const { result } = renderHook(() => useCounter(0))
+  act(() => result.current.increment())
+  expect(result.current.count).toBe(1)
+})
+```
+
+Wrap state updates in `act()`. If the hook depends on context or external state, pass a `wrapper` option with the provider.
+
+### Provider wrapping
+
+Components that consume Context, Router, or a query client need providers. Use a project-level custom render wrapper — don't recreate providers per test:
+
+```tsx
+// test-utils.tsx (create once, import everywhere)
+import { render } from '@testing-library/react'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { MemoryRouter } from 'react-router-dom'
+
+function AllProviders({ children }: { children: React.ReactNode }) {
+  const queryClient = new QueryClient({
+    defaultOptions: { queries: { retry: false } }, // no retries in tests
+  })
+  return (
+    <QueryClientProvider client={queryClient}>
+      <MemoryRouter>{children}</MemoryRouter>
+    </QueryClientProvider>
+  )
+}
+
+const customRender = (ui: React.ReactElement, options = {}) =>
+  render(ui, { wrapper: AllProviders, ...options })
+
+export * from '@testing-library/react'
+export { customRender as render }
+```
+
+### API mocking with MSW
+
+If the project uses MSW, mock at the network layer — not by mocking `fetch` or an axios instance:
+
+```tsx
+// In test setup (already wired via beforeAll/afterEach/afterAll in setupTests.ts)
+// In the test:
+import { server } from '../mocks/server'
+import { http, HttpResponse } from 'msw'
+
+it('shows error when fetch fails', async () => {
+  server.use(
+    http.get('/api/users', () => HttpResponse.json({ error: 'Server Error' }, { status: 500 }))
+  )
+  render(<UserList />)
+  expect(await screen.findByText(/something went wrong/i)).toBeInTheDocument()
+})
+```
+
+### What to assert
+
+| Want to verify | Use |
+|---|---|
+| Element exists | `expect(el).toBeInTheDocument()` |
+| Element gone | `expect(el).not.toBeInTheDocument()` |
+| Input value | `expect(input).toHaveValue('text')` |
+| Button disabled | `expect(btn).toBeDisabled()` |
+| Accessible name | `getByRole('button', { name: /save/i })` — the query IS the assertion |
+| Form submission called | `expect(onSubmit).toHaveBeenCalledWith(expect.objectContaining({ email: 'x@y.com' }))` |
+
+### React-specific "Do not"
+
+- **Don't assert on internal state** (`component.state`, hook internals via refs). Assert observable output.
+- **Don't reach into the component tree** with `.querySelector`. Use RTL queries.
+- **Don't wrap everything in `act()`** manually — RTL wraps renders and `userEvent` calls automatically. Manual `act()` is only for `renderHook` state updates.
+- **Don't create a new `QueryClient` per assertion** — create one per test in the render wrapper with `retry: false`.
+- **Don't snapshot the whole component tree** — snapshot tests are change detectors, not behavior tests. If you must snapshot, snapshot specific UI sub-sections.
+
+---
+
 ## Do not
 
 - **Don't assert on `repr()` / `str()` of objects** unless the string representation *is* the contract. `assert str(result) == "<Foo id=3 ...>"` breaks when someone adds a field.
