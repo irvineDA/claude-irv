@@ -7,6 +7,11 @@ description: Scan for Snyk vulnerabilities, plan patches, verify compatibility, 
 
 Scan, plan, patch, and verify dependency vulnerabilities with minimal disruption.
 
+## Phase 0: Prerequisites
+1. Check if Snyk CLI is installed: `which snyk`
+2. If not found, install via Homebrew: `brew install snyk`
+3. Verify installation: `snyk --version`
+
 ## Phase 1: Scan
 1. Run `snyk test > vulns.txt 2>&1` to populate the vulnerability report — this file serves as a human-readable reference so the developer can review the raw Snyk output alongside the plan
 2. Read `vulns.txt` and categorise issues:
